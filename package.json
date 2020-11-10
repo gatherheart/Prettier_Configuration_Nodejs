@@ -4,16 +4,21 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "babel-runtime": "^6.26.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "gql-merge": "^0.0.6",
+    "graphql-to-typescript": "^0.1.2",
     "nodemon": "^2.0.6",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
   },
   "scripts": {
-    "start": "nodemon -e ts,graphql -x ts-node src/server.ts",
+    "dev": "nodemon -e ts,graphql -x ts-node src/server.ts",
     "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
-    "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'"
+    "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
+    "pretypes": "gql-merge --out-file ./src/schema.graphql ./src/api/**/*.graphql",
+    "types": "graphql-to-typescript ./src/schema.graphql ./src/types/graph.d.ts"
   },
   "dependencies": {
     "@types/morgan": "^1.9.2",
