@@ -1,5 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { QuerySayHelloArgs, SayHelloResponse, Message } from '../../types'
+import {
+  QuerySayHelloArgs,
+  SayHelloResponse,
+  MutationSendHelloArgs,
+  SubscriptionMessageArgs,
+  Message,
+} from '../../types'
 
 const resolvers = {
   Query: {
@@ -10,11 +15,21 @@ const resolvers = {
       }
     },
   },
+
+  Mutation: {
+    sendHello: (_, { channel, text }: MutationSendHelloArgs, { pubsub }): Message => {
+      console.log(channel)
+      const message = { channel, text }
+      pubsub.publish(channel, { message })
+      return message
+    },
+  },
+
   Subscription: {
-    sayHello: {
-      subscribe: (_, args, { pubsub }): Message => {
-        const { id: channel } = args
-        let count = 0
+    message: {
+      subscribe: (_, { channel }: SubscriptionMessageArgs, { pubsub }): Message => {
+        console.log(channel)
+        return pubsub.asyncIterator(channel)
       },
     },
   },

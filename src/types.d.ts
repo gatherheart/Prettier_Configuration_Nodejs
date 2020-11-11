@@ -1,41 +1,54 @@
-export type Maybe<T> = T | null
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
+export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string
-  String: string
-  Boolean: boolean
-  Int: number
-  Float: number
-}
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+};
 
 export type Message = {
-  __typename?: 'Message'
-  id: Scalars['ID']
-  text: Scalars['String']
-}
+  __typename?: 'Message';
+  channel: Scalars['String'];
+  text: Scalars['String'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  sendHello: Message;
+};
+
+
+export type MutationSendHelloArgs = {
+  channel: Scalars['String'];
+  text: Scalars['String'];
+};
 
 export type Query = {
-  __typename?: 'Query'
-  sayBye: Scalars['String']
-  sayHello: SayHelloResponse
-}
+  __typename?: 'Query';
+  sayBye: Scalars['String'];
+  sayHello: SayHelloResponse;
+};
+
 
 export type QuerySayHelloArgs = {
-  name: Scalars['String']
-}
+  name: Scalars['String'];
+};
 
 export type SayHelloResponse = {
-  __typename?: 'SayHelloResponse'
-  text: Scalars['String']
-  error: Scalars['Boolean']
-}
+  __typename?: 'SayHelloResponse';
+  text: Scalars['String'];
+  error: Scalars['Boolean'];
+};
 
 export type Subscription = {
-  __typename?: 'Subscription'
-  sayHello: Message
-}
+  __typename?: 'Subscription';
+  message: Message;
+};
 
-export type SubscriptionSayHelloArgs = {
-  id: Scalars['String']
-}
+
+export type SubscriptionMessageArgs = {
+  channel: Scalars['String'];
+};

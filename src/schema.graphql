@@ -9,10 +9,14 @@ type SayHelloResponse {
 }
 
 type Message {
-  id: ID!
+  channel: String!
   text: String!
 }
 
+type Mutation {
+  sendHello(channel: String!, text: String!): Message!
+}
+
 type Subscription {
-  sayHello(id: String!): Message!
+  message(channel: String!): Message!
 }
