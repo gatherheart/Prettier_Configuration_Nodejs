@@ -10,6 +10,7 @@ export const connect = (): void => {
   void Mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   database = Mongoose.connection
   database.once('open', () => {
