@@ -1,4 +1,5 @@
-import { QuerySayHelloArgs, SayHelloResponse } from '../../types'
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { QuerySayHelloArgs, SayHelloResponse, Message } from '../../types'
 
 const resolvers = {
   Query: {
@@ -7,6 +8,14 @@ const resolvers = {
         error: false,
         text: `Hello ${args.name}`,
       }
+    },
+  },
+  Subscription: {
+    sayHello: {
+      subscribe: (_, args, { pubsub }): Message => {
+        const { id: channel } = args
+        let count = 0
+      },
     },
   },
 }

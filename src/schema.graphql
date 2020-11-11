@@ -7,3 +7,12 @@ type SayHelloResponse {
   text: String!
   error: Boolean!
 }
+
+type Message {
+  id: ID!
+  text: String!
+}
+
+type Subscription {
+  sayHello(id: String!): Message!
+}

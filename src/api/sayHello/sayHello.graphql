@@ -3,6 +3,15 @@ type SayHelloResponse {
   error: Boolean!
 }
 
+type Message {
+  id: ID!
+  text: String!
+}
+
 type Query {
   sayHello(name: String!): SayHelloResponse!
+}
+
+type Subscription {
+  sayHello(id: String!): Message!
 }

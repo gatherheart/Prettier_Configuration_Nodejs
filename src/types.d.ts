@@ -9,6 +9,12 @@ export type Scalars = {
   Float: number
 }
 
+export type Message = {
+  __typename?: 'Message'
+  id: Scalars['ID']
+  text: Scalars['String']
+}
+
 export type Query = {
   __typename?: 'Query'
   sayBye: Scalars['String']
@@ -23,4 +29,13 @@ export type SayHelloResponse = {
   __typename?: 'SayHelloResponse'
   text: Scalars['String']
   error: Scalars['Boolean']
+}
+
+export type Subscription = {
+  __typename?: 'Subscription'
+  sayHello: Message
+}
+
+export type SubscriptionSayHelloArgs = {
+  id: Scalars['String']
 }
