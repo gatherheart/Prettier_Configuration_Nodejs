@@ -12,7 +12,7 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation'
   sample1: SampleMessage
-  sample2: User
+  sample2: Sample2Response
 }
 
 export type MutationSample1Args = {
@@ -21,6 +21,7 @@ export type MutationSample1Args = {
 }
 
 export type MutationSample2Args = {
+  uid: Scalars['String']
   userName: Scalars['String']
   email: Scalars['String']
 }
@@ -28,11 +29,22 @@ export type MutationSample2Args = {
 export type Query = {
   __typename?: 'Query'
   sample1: SampleResponse
-  sample2: Scalars['String']
+  sample2: Sample2Response
 }
 
 export type QuerySample1Args = {
   name: Scalars['String']
+}
+
+export type QuerySample2Args = {
+  uid: Scalars['String']
+}
+
+export type Sample2Response = {
+  __typename?: 'Sample2Response'
+  user?: Maybe<User>
+  errorMessage?: Maybe<Scalars['String']>
+  error: Scalars['Boolean']
 }
 
 export type SampleMessage = {
@@ -58,6 +70,7 @@ export type SubscriptionSample1Args = {
 
 export type User = {
   __typename?: 'User'
+  uid: Scalars['String']
   userName: Scalars['String']
   email: Scalars['String']
 }
