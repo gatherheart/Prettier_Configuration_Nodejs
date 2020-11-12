@@ -10,19 +10,12 @@ type SampleMessage {
 
 type Query {
   sample1(name: String!): SampleResponse!
-  sample2: String!
 }
 
 type Mutation {
   sample1(channel: String!, text: String!): SampleMessage!
-  sample2(userName: String!, email: String!): User!
 }
 
 type Subscription {
   sample1(channel: String!): SampleMessage!
-}
-
-type User {
-  userName: String!
-  email: String!
 }

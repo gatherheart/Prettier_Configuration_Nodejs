@@ -1,54 +1,63 @@
-export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Maybe<T> = T | null
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-};
-
-export type Message = {
-  __typename?: 'Message';
-  channel: Scalars['String'];
-  text: Scalars['String'];
-};
+  ID: string
+  String: string
+  Boolean: boolean
+  Int: number
+  Float: number
+}
 
 export type Mutation = {
-  __typename?: 'Mutation';
-  sendHello: Message;
-};
+  __typename?: 'Mutation'
+  sample1: SampleMessage
+  sample2: User
+}
 
+export type MutationSample1Args = {
+  channel: Scalars['String']
+  text: Scalars['String']
+}
 
-export type MutationSendHelloArgs = {
-  channel: Scalars['String'];
-  text: Scalars['String'];
-};
+export type MutationSample2Args = {
+  userName: Scalars['String']
+  email: Scalars['String']
+}
 
 export type Query = {
-  __typename?: 'Query';
-  sayBye: Scalars['String'];
-  sayHello: SayHelloResponse;
-};
+  __typename?: 'Query'
+  sample1: SampleResponse
+  sample2: Scalars['String']
+}
 
+export type QuerySample1Args = {
+  name: Scalars['String']
+}
 
-export type QuerySayHelloArgs = {
-  name: Scalars['String'];
-};
+export type SampleMessage = {
+  __typename?: 'SampleMessage'
+  channel: Scalars['String']
+  text: Scalars['String']
+}
 
-export type SayHelloResponse = {
-  __typename?: 'SayHelloResponse';
-  text: Scalars['String'];
-  error: Scalars['Boolean'];
-};
+export type SampleResponse = {
+  __typename?: 'SampleResponse'
+  text: Scalars['String']
+  error: Scalars['Boolean']
+}
 
 export type Subscription = {
-  __typename?: 'Subscription';
-  message: Message;
-};
+  __typename?: 'Subscription'
+  sample1: SampleMessage
+}
 
+export type SubscriptionSample1Args = {
+  channel: Scalars['String']
+}
 
-export type SubscriptionMessageArgs = {
-  channel: Scalars['String'];
-};
+export type User = {
+  __typename?: 'User'
+  userName: Scalars['String']
+  email: Scalars['String']
+}

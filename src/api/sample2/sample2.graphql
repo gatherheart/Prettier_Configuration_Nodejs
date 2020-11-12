@@ -4,9 +4,9 @@ type User {
 }
 
 type Query {
-  sayBye: String!
+  sample2: String!
 }
 
 type Mutation {
-  createBye(userName: String!, email: String!): User!
+  sample2(userName: String!, email: String!): User!
 }
