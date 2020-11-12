@@ -15,9 +15,9 @@ const resolvers = {
       try {
         const createdUser: IUser = await createUser({ uid, userName, email })
         void createdUser.save()
-        return { error: false, user: createUser }
+        return { error: false, user: createdUser }
       } catch (err) {
-        return { error: true, errorMessage: 'Already Existing User' }
+        return { error: true, errorMessage: 'Already Existing uid or userName' }
       }
     },
   },
