@@ -4,14 +4,14 @@ import { MutationSample2Args, QuerySample2Args, Sample2Response } from '../../ty
 
 const resolvers = {
   Query: {
-    sample2: async (_, { uid }: QuerySample2Args): Promise<Sample2Response> => {
+    sample2: async (_: unknown, { uid }: QuerySample2Args): Promise<Sample2Response> => {
       const foundUser: IUser = await findUserById({ uid })
       if (foundUser) return { error: false, user: foundUser }
       else return { error: true, errorMessage: 'Not Found User' }
     },
   },
   Mutation: {
-    sample2: async (_, { uid, userName, email }: MutationSample2Args): Promise<Sample2Response> => {
+    sample2: async (_: unknown, { uid, userName, email }: MutationSample2Args): Promise<Sample2Response> => {
       try {
         const createdUser: IUser = await createUser({ uid, userName, email })
         void createdUser.save()

@@ -8,6 +8,8 @@
     "@graphql-codegen/introspection": "1.18.0",
     "@graphql-codegen/typescript": "^1.17.11",
     "@graphql-codegen/typescript-resolvers": "1.17.10",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
     "babel-runtime": "^6.26.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -32,8 +34,6 @@
   "dependencies": {
     "@types/mongoose": "^5.10.0",
     "@types/morgan": "^1.9.2",
-    "@typescript-eslint/eslint-plugin": "^4.7.0",
-    "@typescript-eslint/parser": "^4.7.0",
     "copy": "^0.3.2",
     "dotenv": "^8.2.0",
     "eslint": "^7.13.0",
