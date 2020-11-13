@@ -1,5 +1,8 @@
 import * as Mongoose from 'mongoose'
-//import { UserModel } from './users/users.model'
+import * as Redis from 'redis'
+
+const redisClient = Redis.createClient
+export const redis = redisClient(6379, 'localhost')
 
 let database: Mongoose.Connection
 export const connect = (): void => {
@@ -18,6 +21,9 @@ export const connect = (): void => {
   })
   database.on('error', () => {
     console.log('Error connecting to database')
+  })
+  redis.on('connect', () => {
+    console.log('connected to Redis')
   })
 }
 export const disconnect = (): void => {
