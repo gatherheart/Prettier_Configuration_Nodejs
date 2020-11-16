@@ -3,9 +3,9 @@ import * as mongoose from 'mongoose'
 export const SLOT_HASH_MAP_KEY = 'slotHashMap'
 
 type Position = {
-  x: number
-  y: number
-  angle: number
+  x?: number
+  y?: number
+  angle?: number
 }
 
 export enum SlotState {

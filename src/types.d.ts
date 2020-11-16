@@ -1,3 +1,5 @@
+import { ISlot } from './db/slot/slot.model'
+
 export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 /** All built-in and custom scalars, mapped to their actual values */
@@ -21,9 +23,22 @@ export type MutationSample1Args = {
 }
 
 export type MutationSample2Args = {
-  uid: Scalars['String']
-  userName: Scalars['String']
-  email: Scalars['String']
+  slotId: Scalars['String']
+  position: Position
+  typeName: Scalars['String']
+}
+
+export type Position = {
+  __typename?: 'Position'
+  x?: Maybe<Scalars['Float']>
+  y?: Maybe<Scalars['Float']>
+  angle?: Maybe<Scalars['Float']>
+}
+
+export type PositionArgs = {
+  x?: Maybe<Scalars['Float']>
+  y?: Maybe<Scalars['Float']>
+  angle?: Maybe<Scalars['Float']>
 }
 
 export type Query = {
@@ -37,12 +52,12 @@ export type QuerySample1Args = {
 }
 
 export type QuerySample2Args = {
-  uid: Scalars['String']
+  slotId: Scalars['String']
 }
 
 export type Sample2Response = {
   __typename?: 'Sample2Response'
-  user?: Maybe<User>
+  slot?: Maybe<ISlot>
   errorMessage?: Maybe<Scalars['String']>
   error: Scalars['Boolean']
 }
@@ -57,6 +72,20 @@ export type SampleResponse = {
   __typename?: 'SampleResponse'
   text: Scalars['String']
   error: Scalars['Boolean']
+}
+
+export type Slot = {
+  __typename?: 'Slot'
+  slotId: Scalars['String']
+  position: Position
+  state?: Maybe<SlotState>
+  typeName: Scalars['String']
+}
+
+export enum SlotState {
+  Free = 'FREE',
+  Occupied = 'OCCUPIED',
+  Sold = 'SOLD',
 }
 
 export type Subscription = {
