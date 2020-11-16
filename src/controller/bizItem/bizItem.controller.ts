@@ -15,10 +15,10 @@ function createBizItem({ businessId, bizItemId, slotMapId }: CreateQuery<IBizIte
     })
 }
 
-function findUserById({ uid }: CreateQuery<{ uid: string }>): Promise<IBizItem> {
+function findBizItemById({ bizItemId }: CreateQuery<{ bizItemId: string }>): Promise<IBizItem> {
   return new Promise<IBizItem>((resolve, reject) => {
     BizItem.findOne({
-      uid,
+      bizItemId,
     })
       .then((found: IBizItem) => {
         resolve(found)
@@ -29,4 +29,4 @@ function findUserById({ uid }: CreateQuery<{ uid: string }>): Promise<IBizItem> 
   })
 }
 
-export { createBizItem, findUserById }
+export { createBizItem, findBizItemById }
