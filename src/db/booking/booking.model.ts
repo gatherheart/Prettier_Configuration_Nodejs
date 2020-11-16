@@ -19,7 +19,7 @@ const BookingDetailSchema: mongoose.Schema = new mongoose.Schema({
 })
 
 const BookingSchema: mongoose.Schema = new mongoose.Schema({
-  bookingId: { type: Number, required: true },
+  bookingId: { type: Number, required: true, unique: true },
   booking: { type: BookingDetailSchema },
   createdAt: { type: Date, default: Date.now },
 })

@@ -8,7 +8,7 @@ export interface IBizItem extends mongoose.Document {
 
 const BizItemSchema: mongoose.Schema = new mongoose.Schema({
   businessId: { type: String, required: true },
-  bizItemId: { type: String, required: true },
+  bizItemId: { type: String, required: true, unique: true },
   slotMapId: { type: [String] },
 })
 

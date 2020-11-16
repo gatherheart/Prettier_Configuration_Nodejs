@@ -1,6 +1,8 @@
 import { createSlot, findSlotById } from '../../controller/slot/slot.controller'
+import { createBizItem } from '../../controller/bizItem/bizItem.controller'
 import { ISlot } from '../../db/slot/slot.model'
 import { MutationSample2Args, QuerySample2Args, Sample2Response } from '../../types'
+import { IBizItem } from '../../db/bizItem/bizItem.model'
 
 const resolvers = {
   Query: {
@@ -15,6 +17,13 @@ const resolvers = {
       try {
         const createdSlot: ISlot = await createSlot({ slotId, position, typeName })
         void createdSlot.save()
+        const createdBizItem: IBizItem = await createBizItem({
+          businessId: '421150',
+          bizItemId: '3612160',
+          slotMapId: ['185530997', '185531007'],
+        })
+        void createdBizItem.save()
+
         return { error: false, slot: createdSlot }
       } catch (err) {
         return { error: true, errorMessage: 'Already Existing uid or userName' }

@@ -31,7 +31,7 @@ const PositionSchema: mongoose.Schema = new mongoose.Schema(
 )
 
 export const SlotSchema: mongoose.Schema = new mongoose.Schema({
-  slotId: { type: String, required: true },
+  slotId: { type: String, required: true, unique: true },
   position: { type: PositionSchema, default: { x: 0, y: 0, angle: 0 } },
   state: { type: String, enum: ['FREE', 'OCCUPIED', 'SOLD'], default: 'FREE', required: true },
   typeName: { type: String, required: true },

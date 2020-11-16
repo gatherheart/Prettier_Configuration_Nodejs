@@ -2,7 +2,7 @@ import Slot, { ISlot, SLOT_HASH_MAP_KEY, SlotState } from '../../db/slot/slot.mo
 import { CreateQuery } from 'mongoose'
 import { redis } from '../../db/database'
 
-async function createSlot({ slotId, position, typeName }: CreateQuery<ISlot>): Promise<ISlot> {
+function createSlot({ slotId, position, typeName }: CreateQuery<ISlot>): Promise<ISlot> {
   return Slot.create({
     slotId,
     position,
