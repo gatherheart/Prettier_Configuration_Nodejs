@@ -1,21 +1,20 @@
-import { createUser, findUserById } from '../../controller/user/user.controller'
-import { IUser } from '../../db/user/user.model'
-import { MutationSample2Args, QuerySample2Args, Sample2Response } from '../../types'
+import { createSlot, findSlotById } from '../../controller/slot/slot.controller'
+import { ISlot } from '../../db/slot/slot.model'
 
 const resolvers = {
   Query: {
-    sample2: async (_: unknown, { uid }: QuerySample2Args): Promise<Sample2Response> => {
-      const foundUser: IUser = await findUserById({ uid })
-      if (foundUser) return { error: false, user: foundUser }
+    sample2: async (_: unknown, { slotId }) => {
+      const foundSlot: ISlot = await findSlotById({ slotId })
+      if (foundSlot) return { error: false, slot: foundSlot }
       else return { error: true, errorMessage: 'Not Found User' }
     },
   },
   Mutation: {
-    sample2: async (_: unknown, { uid, userName, email }: MutationSample2Args): Promise<Sample2Response> => {
+    sample2: async (_: unknown, { slotId, position, typeName }) => {
       try {
-        const createdUser: IUser = await createUser({ uid, userName, email })
-        void createdUser.save()
-        return { error: false, user: createdUser }
+        const createdSlot: ISlot = await createSlot({ slotId, position, typeName })
+        void createdSlot.save()
+        return { error: false, slot: createdSlot }
       } catch (err) {
         return { error: true, errorMessage: 'Already Existing uid or userName' }
       }
