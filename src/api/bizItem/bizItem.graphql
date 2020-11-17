@@ -1,7 +1,13 @@
-type BizItemResponse {
+type BizItemInfoResponse {
   error: Boolean!
   errorMessage: String
-  bizItem: BizItem
+  bizItemInfo: JSON
+}
+
+type ListOfBizItemsResponse {
+  error: Boolean!
+  errorMessage: String
+  bizItems: [BizItem]
 }
 
 type BizItem {
@@ -11,7 +17,8 @@ type BizItem {
 }
 
 type Query {
-  getBizItemInfo(bizItemId: String!): BizItemResponse!
+  getBizItemInfo(bizItemId: String!): BizItemInfoResponse!
+  getListOfBizItems: ListOfBizItemsResponse!
 }
 
 type Mutation {

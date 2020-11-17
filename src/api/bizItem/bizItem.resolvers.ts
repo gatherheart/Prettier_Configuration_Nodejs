@@ -1,23 +1,19 @@
-import { findBizItemById } from '../../controller/bizItem/bizItem.controller'
-import { IContext } from '../../interface/graphql.interface'
+import { findBizItemById, getBizItems } from '../../controller/bizItem/bizItem.controller'
+import { getBizItemInfo } from '../../util/api'
 
 const resolvers = {
   Query: {
+    getListOfBizItems: async (_: unknown) => {
+      const bizItems = await getBizItems()
+      return { error: false, bizItems: bizItems }
+    },
     getBizItemInfo: async (_: unknown, { bizItemId }: { bizItemId: string }) => {
       const bizItem = await findBizItemById({ bizItemId })
-      console.log(bizItem)
+      const bizItemInfo = await getBizItemInfo({ businessId: bizItem.businessId, bizItemId })
       return {
-        bizItem: bizItem,
+        bizItemInfo,
         error: false,
       }
-    },
-  },
-
-  Mutation: {
-    sample1: (_: unknown, { channel, text }, { pubsub }: IContext) => {
-      const message = { channel, text }
-      pubsub.publish(channel, { sample1: message })
-      return message
     },
   },
 }

@@ -29,4 +29,17 @@ function findBizItemById({ bizItemId }: CreateQuery<{ bizItemId: string }>): Pro
   })
 }
 
-export { createBizItem, findBizItemById }
+function getBizItems(): Promise<Array<IBizItem>> {
+  return new Promise<Array<IBizItem>>((resolve, reject) => {
+    BizItem.find({})
+      .limit(10)
+      .then((found: Array<IBizItem>) => {
+        resolve(found)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
+  })
+}
+
+export { createBizItem, findBizItemById, getBizItems }
