@@ -1,5 +1,3 @@
-import { ISlot } from './db/slot/slot.model'
-
 export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 /** All built-in and custom scalars, mapped to their actual values */
@@ -9,12 +7,35 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
+  JSON: any
+}
+
+export type BizItem = {
+  __typename?: 'BizItem'
+  businessId?: Maybe<Scalars['String']>
+  bizItemId?: Maybe<Scalars['String']>
+  slotMapId?: Maybe<Array<Maybe<Scalars['String']>>>
+}
+
+export type BizItemInfoResponse = {
+  __typename?: 'BizItemInfoResponse'
+  error: Scalars['Boolean']
+  errorMessage?: Maybe<Scalars['String']>
+  bizItemInfo?: Maybe<Scalars['JSON']>
+}
+
+export type ListOfBizItemsResponse = {
+  __typename?: 'ListOfBizItemsResponse'
+  error: Scalars['Boolean']
+  errorMessage?: Maybe<Scalars['String']>
+  bizItems?: Maybe<Array<Maybe<BizItem>>>
 }
 
 export type Mutation = {
   __typename?: 'Mutation'
   sample1: SampleMessage
   sample2: Sample2Response
+  synchronizationForSlot?: Maybe<Scalars['Boolean']>
 }
 
 export type MutationSample1Args = {
@@ -24,27 +45,25 @@ export type MutationSample1Args = {
 
 export type MutationSample2Args = {
   slotId: Scalars['String']
-  position: Position
+  view: Scalars['String']
   typeName: Scalars['String']
 }
 
-export type Position = {
-  __typename?: 'Position'
-  x?: Maybe<Scalars['Float']>
-  y?: Maybe<Scalars['Float']>
-  angle?: Maybe<Scalars['Float']>
-}
-
-export type PositionArgs = {
-  x?: Maybe<Scalars['Float']>
-  y?: Maybe<Scalars['Float']>
-  angle?: Maybe<Scalars['Float']>
+export type MutationSynchronizationForSlotArgs = {
+  bizItemId: Scalars['String']
+  slotMapId: Scalars['String']
 }
 
 export type Query = {
   __typename?: 'Query'
+  getBizItemInfo: BizItemInfoResponse
+  getListOfBizItems: ListOfBizItemsResponse
   sample1: SampleResponse
   sample2: Sample2Response
+}
+
+export type QueryGetBizItemInfoArgs = {
+  bizItemId: Scalars['String']
 }
 
 export type QuerySample1Args = {
@@ -57,7 +76,7 @@ export type QuerySample2Args = {
 
 export type Sample2Response = {
   __typename?: 'Sample2Response'
-  slot?: Maybe<ISlot>
+  slot?: Maybe<Slot>
   errorMessage?: Maybe<Scalars['String']>
   error: Scalars['Boolean']
 }
@@ -77,7 +96,7 @@ export type SampleResponse = {
 export type Slot = {
   __typename?: 'Slot'
   slotId: Scalars['String']
-  position: Position
+  view: Scalars['String']
   state?: Maybe<SlotState>
   typeName: Scalars['String']
 }
@@ -95,11 +114,4 @@ export type Subscription = {
 
 export type SubscriptionSample1Args = {
   channel: Scalars['String']
-}
-
-export type User = {
-  __typename?: 'User'
-  uid: Scalars['String']
-  userName: Scalars['String']
-  email: Scalars['String']
 }

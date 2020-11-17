@@ -4,15 +4,26 @@ import { getBizItemInfo } from '../../util/api'
 const resolvers = {
   Query: {
     getListOfBizItems: async (_: unknown) => {
-      const bizItems = await getBizItems()
-      return { error: false, bizItems: bizItems }
+      try {
+        const bizItems = await getBizItems()
+        return { error: false, bizItems: bizItems }
+      } catch (error) {
+        return { error: true, errorMessage: '[ERROR] unhandled error occured on server' }
+      }
     },
     getBizItemInfo: async (_: unknown, { bizItemId }: { bizItemId: string }) => {
-      const bizItem = await findBizItemById({ bizItemId })
-      const bizItemInfo = await getBizItemInfo({ businessId: bizItem.businessId, bizItemId })
-      return {
-        bizItemInfo,
-        error: false,
+      try {
+        const bizItem = await findBizItemById({ bizItemId })
+        const bizItemInfo = await getBizItemInfo({ businessId: bizItem.businessId, bizItemId })
+        return {
+          bizItemInfo,
+          error: false,
+        }
+      } catch (error) {
+        return {
+          error: true,
+          errorMessage: '[ERROR] unhandled error occured on server',
+        }
       }
     },
   },

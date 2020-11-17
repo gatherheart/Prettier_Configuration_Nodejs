@@ -3,10 +3,11 @@ exports.__esModule = true;
 var mongoose = require("mongoose");
 var BookingDetailSchema = new mongoose.Schema({
     bizItemId: { type: String },
+    slotMapId: { type: String },
     slotIds: { type: [String] }
 });
 var BookingSchema = new mongoose.Schema({
-    bookingId: { type: Number, required: true },
+    bookingId: { type: Number, required: true, unique: true },
     booking: { type: BookingDetailSchema },
     createdAt: { type: Date, "default": Date.now }
 });

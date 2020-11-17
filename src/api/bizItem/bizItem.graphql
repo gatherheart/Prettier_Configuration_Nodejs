@@ -20,7 +20,3 @@ type Query {
   getBizItemInfo(bizItemId: String!): BizItemInfoResponse!
   getListOfBizItems: ListOfBizItemsResponse!
 }
-
-type Mutation {
-  sample1(channel: String!, text: String!): SampleMessage!
-}

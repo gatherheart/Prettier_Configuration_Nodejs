@@ -60,17 +60,16 @@ var resolvers = {
     },
     Mutation: {
         sample2: function (_, _a) {
-            var slotId = _a.slotId, position = _a.position, typeName = _a.typeName;
+            var slotId = _a.slotId, view = _a.view, typeName = _a.typeName;
             return __awaiter(void 0, void 0, void 0, function () {
                 var createdSlot, err_1;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
                             _b.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, slot_controller_1.createSlot({ slotId: slotId, position: position, typeName: typeName })];
+                            return [4 /*yield*/, slot_controller_1.createSlot({ slotId: slotId, view: view, typeName: typeName })];
                         case 1:
                             createdSlot = _b.sent();
-                            void createdSlot.save();
                             return [2 /*return*/, { error: false, slot: createdSlot }];
                         case 2:
                             err_1 = _b.sent();
