@@ -1,7 +1,7 @@
-import Slot, { ISlot, SLOT_HASH_MAP_KEY } from '../../db/slot/slot.model'
+import Slot, { SLOT_HASH_MAP_KEY } from '../../db/slot/slot.model'
 import { CreateQuery } from 'mongoose'
 import { redis } from '../../db/database'
-import { SlotState } from '../../interface/slot/slot.interface'
+import { SlotState, ISlot } from '../../interface/slot/slot.interface'
 
 function createSlot({ slotId, view, typeName }: CreateQuery<ISlot>): Promise<ISlot> {
   return Slot.create({
