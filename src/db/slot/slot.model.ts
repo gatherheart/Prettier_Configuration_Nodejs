@@ -1,8 +1,6 @@
 import * as mongoose from 'mongoose'
 import { ISlot } from '../../interface/slot/slot.interface'
 
-export const SLOT_HASH_MAP_KEY = 'slotHashMap'
-
 export interface ISlotD extends ISlot, mongoose.Document {}
 
 export const SlotSchema: mongoose.Schema = new mongoose.Schema({
