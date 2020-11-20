@@ -28,7 +28,7 @@
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
     "pretypes": "gql-merge --out-file ./src/schema.graphql ./src/api/**/*.graphql",
     "build": "tsc",
-    "postbuild": "cd src && copy ./api/**/*.graphql ../dist/",
+    "postbuild": "cd src && copy ./api/**/*.graphql ../dist/ && cd -",
     "prebuild": "rm -rf dist",
     "build:all": "yarn prebuild && yarn build && yarn postbuild",
     "start": "node ./dist/server.js",

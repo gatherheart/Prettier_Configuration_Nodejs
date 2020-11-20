@@ -3,10 +3,7 @@ exports.__esModule = true;
 var resolvers = {
     Query: {
         sample1: function (_, args) {
-            return {
-                text: "Hello " + args.name,
-                error: false
-            };
+            return "Hello " + args.name;
         }
     },
     Mutation: {

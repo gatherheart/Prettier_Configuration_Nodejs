@@ -40,18 +40,18 @@ var slot_controller_1 = require("../../controller/slot/slot.controller");
 var resolvers = {
     Query: {
         sample2: function (_, _a) {
-            var slotId = _a.slotId;
+            var bizItemId = _a.bizItemId, slotMapId = _a.slotMapId;
             return __awaiter(void 0, void 0, void 0, function () {
                 var foundSlot;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
-                        case 0: return [4 /*yield*/, slot_controller_1.findSlotById({ slotId: slotId })];
+                        case 0: return [4 /*yield*/, slot_controller_1.getSlots({ bizItemId: bizItemId, slotMapId: slotMapId })];
                         case 1:
                             foundSlot = _b.sent();
                             if (foundSlot)
-                                return [2 /*return*/, { error: false, slot: foundSlot }];
+                                return [2 /*return*/, foundSlot];
                             else
-                                return [2 /*return*/, { error: true, errorMessage: 'Not Found User' }];
+                                throw new Error('Not Found');
                             return [2 /*return*/];
                     }
                 });
@@ -62,20 +62,14 @@ var resolvers = {
         sample2: function (_, _a) {
             var slotId = _a.slotId, view = _a.view, typeName = _a.typeName;
             return __awaiter(void 0, void 0, void 0, function () {
-                var createdSlot, err_1;
                 return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            _b.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, slot_controller_1.createSlot({ slotId: slotId, view: view, typeName: typeName })];
-                        case 1:
-                            createdSlot = _b.sent();
-                            return [2 /*return*/, { error: false, slot: createdSlot }];
-                        case 2:
-                            err_1 = _b.sent();
-                            return [2 /*return*/, { error: true, errorMessage: 'Already Existing uid or userName' }];
-                        case 3: return [2 /*return*/];
+                    try {
+                        return [2 /*return*/, 'Hello World'];
                     }
+                    catch (err) {
+                        throw new Error(err);
+                    }
+                    return [2 /*return*/];
                 });
             });
         }

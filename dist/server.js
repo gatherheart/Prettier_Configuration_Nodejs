@@ -9,10 +9,16 @@ var logger = require("morgan");
 dotenv_1.config({ path: path_1.resolve(__dirname, '../.env') });
 var PORT = process.env.PORT || 4000;
 var pubsub = new graphql_yoga_1.PubSub();
-var server = new graphql_yoga_1.GraphQLServer({ schema: schema_1["default"], context: { pubsub: pubsub } });
+var server = new graphql_yoga_1.GraphQLServer({
+    schema: schema_1["default"],
+    context: { pubsub: pubsub }
+});
+var options = {
+    port: PORT
+};
 // Connect to DB
 database_1.connect();
 // Server Start
-void server.start({ port: PORT }, function () { return console.log("Server is running on http://localhost:" + PORT); });
+void server.start(options, function () { return console.log("Server is running on http://localhost:" + PORT); });
 server.express.use(logger('dev'));
 //# sourceMappingURL=server.js.map

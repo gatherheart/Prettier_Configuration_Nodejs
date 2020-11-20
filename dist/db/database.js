@@ -8,6 +8,7 @@ exports.redis = redisClient(6379, 'localhost');
 var database;
 exports.connect = function () {
     var uri = process.env.MONGO_URI;
+    console.log(uri);
     if (database) {
         return;
     }
