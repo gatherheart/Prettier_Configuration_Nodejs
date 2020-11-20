@@ -1,6 +1,4 @@
 import Slot, { ISlotD } from '../../db/slot/slot.model'
-import * as mongoose from 'mongoose'
-import { redis } from '../../db/database'
 import { ISlot, SlotStatus } from '../../interface/slot/slot.interface'
 import slotMapModel from '../../db/slotMap/slotMap.model'
 import slotModel from '../../db/slot/slot.model'
@@ -10,8 +8,17 @@ interface getSlotsArgs {
   slotMapId: string
 }
 
-interface getSlotArgs extends getSlotsArgs {
+interface getSlotArgs {
+  bizItemId: string
+  slotMapId: string
   number: string
+}
+
+interface changeSlotStatesArgs {
+  bizItemId: string
+  slotMapId: string
+  numbers: [string]
+  status: SlotStatus
 }
 
 function createManySlots(slotInfos: Array<ISlot>): Promise<Array<ISlotD>> {
@@ -42,16 +49,10 @@ async function getSlots({ bizItemId, slotMapId }: getSlotsArgs) {
   }
 }
 
-async function changeSlotStates({ bizItemId, slotMapId, numbers }) {
-  console.log(bizItemId, slotMapId, numbers)
+async function changeSlotStates({ bizItemId, slotMapId, numbers, status }: changeSlotStatesArgs) {
   try {
-    const result = await slotModel.updateMany(
-      { bizItemId, slotMapId, number: { $in: numbers } },
-      { $set: { status: SlotStatus.OCCUPIED } },
-    )
+    await slotModel.updateMany({ bizItemId, slotMapId, number: { $in: numbers } }, { $set: { status } })
     const slots = await getSlots({ bizItemId, slotMapId })
-    console.log(await Slot.findOne({ bizItemId, slotMapId, status: SlotStatus.OCCUPIED }))
-    console.log(slots)
     return slots
   } catch (err) {
     throw new Error(err)

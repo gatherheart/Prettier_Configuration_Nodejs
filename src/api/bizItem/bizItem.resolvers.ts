@@ -32,7 +32,7 @@ const resolvers = {
   Mutation: {
     createBizItem: async (_: unknown, { bizItemId, businessId }: { bizItemId: string; businessId: string }) => {
       try {
-        console.log('a')
+        return createBizItem({ businessId, bizItemId })
       } catch (err) {
         throw new Error(err)
       }
