@@ -2,6 +2,7 @@ import Slot, { ISlotD } from '../../db/slot/slot.model'
 import { ISlot, SlotStatus } from '../../interface/slot/slot.interface'
 import slotMapModel from '../../db/slotMap/slotMap.model'
 import slotModel from '../../db/slot/slot.model'
+import * as mongodb from 'mongodb'
 
 interface getSlotsArgs {
   bizItemId: string
@@ -17,18 +18,15 @@ interface getSlotArgs {
 interface changeSlotStatesArgs {
   bizItemId: string
   slotMapId: string
-  numbers: [string]
+  numbers: string[]
   status: SlotStatus
 }
 
-function createManySlots(slotInfos: Array<ISlot>): Promise<Array<ISlotD>> {
-  return Slot.insertMany(slotInfos)
-    .then((data: Array<ISlotD>) => {
-      return data
-    })
-    .catch((error: Error) => {
-      throw error
-    })
+async function createManySlots(
+  slotInfos: Array<ISlot>,
+  { session }: { session: mongodb.ClientSession },
+): Promise<Array<ISlotD>> {
+  return Slot.create(slotInfos, { session })
 }
 
 async function getSlot({ bizItemId, slotMapId, number }: getSlotArgs) {

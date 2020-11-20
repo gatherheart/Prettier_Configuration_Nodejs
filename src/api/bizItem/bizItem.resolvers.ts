@@ -30,9 +30,13 @@ const resolvers = {
     },
   },
   Mutation: {
-    createBizItem: async (_: unknown, { bizItemId, businessId }: { bizItemId: string; businessId: string }) => {
+    createBizItem: async (
+      _: unknown,
+      { bizItemId, businessId, slotMapIds }: { bizItemId: string; businessId: string; slotMapIds: string[] },
+    ) => {
       try {
-        return createBizItem({ businessId, bizItemId })
+        const ret = await createBizItem({ businessId, bizItemId, slotMapIds })
+        return ret
       } catch (err) {
         throw new Error(err)
       }

@@ -1,7 +1,22 @@
-import { Types } from 'mongoose'
+import * as mongoose from 'mongoose'
 import BizItem from '../../db/bizItem/bizItem.model'
+import { resolve } from 'path'
+import { config } from 'dotenv'
+
+config({ path: resolve(__dirname, '../../../.env') })
+
+const { Types } = mongoose
 
 describe('READ BizItems', () => {
+  beforeAll(async () => {
+    console.log('BEFORE ALL')
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
+  })
+
   test('This is a sample', () => {
     expect(true).toBe(true)
   })
@@ -28,5 +43,8 @@ describe('READ BizItems', () => {
     expect(spyFetchedBizItems).toEqual(targetData)
 
     spy.mockReset()
+  })
+  afterAll(async () => {
+    await mongoose.connection.close()
   })
 })
