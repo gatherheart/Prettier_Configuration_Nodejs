@@ -5,29 +5,35 @@ import slotMapModel from '@db/slotMap/slotMap.model'
 import slotModel from '@db/slot/slot.model'
 import { ISlotMap } from '@interface/slotMapId/slotMap.interface'
 
-interface getSlotsArgs {
+interface GetSlotsArgs {
   bizItemId: string
   slotMapId: string
 }
 
-interface getSlotArgs {
+interface GetSlotArgs {
   bizItemId: string
   slotMapId: string
   number: string
 }
 
-interface updateSlotOneArgs {
+interface UpdateSlotOneArgs {
   bizItemId: string
   slotMapId: string
   number: string
   status: SlotStatus
 }
 
-interface updateSlotManyArgs {
+interface UpdateSlotManyArgs {
   bizItemId: string
   slotMapId: string
   numbers: string[]
   status: SlotStatus
+}
+
+interface SlotChanges {
+  slots: ISlot[]
+  status: SlotStatus
+  success: boolean
 }
 
 async function createManySlots(
@@ -37,7 +43,7 @@ async function createManySlots(
   return Slot.create(slotInfos, { session })
 }
 
-async function getSlot({ bizItemId, slotMapId, number }: getSlotArgs) {
+async function getSlot({ bizItemId, slotMapId, number }: GetSlotArgs) {
   try {
     return await slotModel.findOne({ bizItemId, slotMapId, number })
   } catch (err) {
@@ -45,56 +51,54 @@ async function getSlot({ bizItemId, slotMapId, number }: getSlotArgs) {
   }
 }
 
-async function getSlots({ bizItemId, slotMapId }: getSlotsArgs): Promise<ISlot[]> {
+async function getSlots({ bizItemId, slotMapId }: GetSlotsArgs): Promise<ISlot[]> {
   try {
     const field = { bizItemId, slotMapId }
     const slotMap: ISlotMap = await slotMapModel.findOne(field).populate('slots')
-    return slotMap.slots as ISlot[]
+    return slotMap?.slots as ISlot[]
   } catch (err) {
     throw new Error(err)
   }
 }
 
-async function updateSlotOne({ bizItemId, slotMapId, number, status }: updateSlotOneArgs) {
+async function updateSlotOne({ bizItemId, slotMapId, number, status }: UpdateSlotOneArgs): Promise<SlotChanges> {
   try {
     const foundSlot = await slotModel.findOne({ bizItemId, slotMapId, number })
     switch (status) {
       case SlotStatus.OCCUPIED:
-        if (foundSlot.status !== SlotStatus.FREE) throw new Error('[Error]: It is an already occupied or booked seat')
+        if (foundSlot.status !== SlotStatus.FREE) return { slots: [], status, success: false }
         break
       // to-do: check user session ID to check who has made this occupation
       case SlotStatus.SOLD:
-        if (foundSlot.status !== SlotStatus.OCCUPIED) throw new Error('[Error]: It should be occupied by your session')
+        if (foundSlot.status !== SlotStatus.OCCUPIED) return { slots: [], status, success: false }
         break
       default:
         break
     }
     await foundSlot.updateOne({ status })
-    const slots = await getSlots({ bizItemId, slotMapId })
-    return slots
+    return { slots: [foundSlot], status, success: true }
   } catch (err) {
     throw new Error(err)
   }
 }
 
-async function updateSlotsMany({ bizItemId, slotMapId, numbers, status }: updateSlotManyArgs) {
+async function updateSlotsMany({ bizItemId, slotMapId, numbers, status }: UpdateSlotManyArgs): Promise<SlotChanges> {
   try {
     const foundSlots = await slotModel.find({ bizItemId, slotMapId, number: { $in: numbers } })
     const foundStatuses: SlotStatus[] = foundSlots.map((slot) => slot.status)
     switch (status) {
       case SlotStatus.OCCUPIED:
-        if (!foundStatuses.includes(SlotStatus.FREE)) throw new Error('It is an already occupied or booked seat')
+        if (!foundStatuses.includes(SlotStatus.FREE)) return { slots: [], status, success: false }
         break
       // to-do: check user session ID to check who has made this occupation
       case SlotStatus.SOLD:
-        if (!foundStatuses.includes(SlotStatus.OCCUPIED)) throw new Error('It should be occupied by your session')
+        if (!foundStatuses.includes(SlotStatus.OCCUPIED)) return { slots: [], status, success: false }
         break
       default:
         break
     }
     await slotModel.updateMany({ bizItemId, slotMapId, number: { $in: numbers } }, { $set: { status } })
-    const slots = await getSlots({ bizItemId, slotMapId })
-    return slots
+    return { slots: foundSlots, status, success: true }
   } catch (err) {
     throw new Error(err)
   }
